@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio Catalogo</title>
+
+    <style> 
+   
+   body { 
+   background-image: url(https://images.alphacoders.com/723/thumb-1920-723301.jpg);
+
+
+   }
+
+    #container {
+
+        text-align: center;
+        margin-top: 40px;
+        
+    }
+
+    #sx {
+         background-color: #FFCC01;
+         border-radius: 20%;
+         width: 100px;
+         height: 50px;
+         font-size: 18px;
+         visibility: hidden;
+
+    }
+
+    #dx {
+         background-color: #3265AF;
+         color: white;
+         border-radius: 20%;
+         width: 100px;
+         height: 50px;
+         font-size: 18px;
+         visibility: hidden;
+
+
+    }
+
+    #pokedex {
+
+        background-color: rgb(255, 119, 119);
+        width: 200px;
+        height: 50px;
+        font-size: 18px;
+        
+
+    }
+
+    #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: -1;
+        }
+
+    </style> 
+</head>
+<body>
+    <div id="overlay"></div>
+    <div id="container" >
+        <form name="modulo">
+            <button type="button" name="sx" id="sx"> Prec. &#9668;</button>
+            <select id="pokedex" name="pokedex">
+                <script>
+                    // Definiamo un array di nomi di Pokémon
+                    let pokemon = ["Blastoise", "Charizard", "Charmender", "Delcatty", "Gumshoos", "Larvitar", "Quilava", "Shedinja", "Slowking", "Swablu"];
+
+                    // Aggiungiamo un'opzione predefinita e una separatore nel menu a tendina
+                    document.write("<option selected disabled>Selezionare</option> <option disabled>---</option>");
+
+                    // Iteriamo sull'array di nomi di Pokémon e creiamo un'opzione per ciascun elemento
+                    for (let i = 0; i < pokemon.length; i++) {
+                    document.write("<option value=" + i + ">" + pokemon[i] + "</option>");
+                    }
+
+                </script>
+            </select>
+            <button type="button" name="dx" id="dx">Succ. &#9658;</button>
+        </form>
+        <div id="imageContainer"></div>
+    </div>
+
+    <script>
+        // Otteniamo gli elementi del DOM che ci servono
+let pokedex = document.getElementById("pokedex"); // Selezione del menu a tendina
+let sxButton = document.getElementById("sx"); // Pulsante precedente
+let dxButton = document.getElementById("dx"); // Pulsante successivo
+let imageContainer = document.getElementById("imageContainer"); // Contenitore dell'immagine
+
+// Aggiungiamo un listener per l'evento "change" sul menu a tendina
+pokedex.addEventListener("change", caricaFoto);
+
+// Aggiungiamo un listener per l'evento "click" sul pulsante precedente
+sxButton.addEventListener("click", scorriSx);
+
+// Aggiungiamo un listener per l'evento "click" sul pulsante successivo
+dxButton.addEventListener("click", scorriDx);
+
+// Funzione chiamata quando viene selezionata un'opzione nel menu a tendina
+function caricaFoto() {
+    let immagine = pokedex.value; // Otteniamo il valore selezionato
+    imageContainer.innerHTML = "<img src='" + pokemon[immagine] + ".png'>"; // Aggiorniamo l'immagine nel contenitore
+    document.getElementById("sx").style.visibility = "visible"; // Mostrare il pulsante precedente
+    document.getElementById("dx").style.visibility = "visible"; // Mostrare il pulsante successivo
+}
+
+// Funzione chiamata quando viene cliccato il pulsante precedente
+function scorriSx() {
+    let immagine = Number(pokedex.value) - 1; // Otteniamo l'immagine precedente
+    if (immagine >= 0) {
+        pokedex.value = immagine; // Aggiorniamo il valore selezionato nel menu a tendina
+        caricaFoto(); // Carichiamo l'immagine corrispondente
+    }
+}
+
+// Funzione chiamata quando viene cliccato il pulsante successivo
+function scorriDx() {
+    let immagine = Number(pokedex.value) + 1; // Otteniamo l'immagine successiva
+    if (immagine < pokemon.length) {
+        pokedex.value = immagine; // Aggiorniamo il valore selezionato nel menu a tendina
+        caricaFoto(); // Carichiamo l'immagine corrispondente
+    }
+}
+    </script>
+</body>
+</html>
